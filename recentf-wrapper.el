@@ -29,24 +29,12 @@
 (require 'recentf)
 (require 'windmove)
 
+;; open recentf in new window
 (defun open-recentf-in-new-window ()
   (interactive)
-  (setq other-win (windmove-find-other-window 'right))
-  (if other-win
-      ;; move to right
-      (windmove-right)
-    (progn
-      ;; test if have left window
-      (setq other-win (windmove-find-other-window 'left))
-      (if other-win
-          ;; move to left
-          (windmove-left)
-        (progn
-          ;; no other window, let's open a new window on right
-          (split-window-horizontally)
-          (windmove-right)))))
-
-  ;; open recent-file dialog
+  (if (= (length (window-list)) 1)
+      (split-window-horizontally))
+  (other-window 1)
   (recentf-open-files))
 
 (provide 'recentf-wrapper)
